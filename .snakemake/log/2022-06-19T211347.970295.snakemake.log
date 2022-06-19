@@ -1,0 +1,104 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+bcftools_call         1              1              1
+bwa_map               2              1              1
+samtools_index        2              1              1
+samtools_sort         2              1              1
+total                 7              1              1
+
+Select jobs to execute...
+
+[Sun Jun 19 21:13:48 2022]
+rule bwa_map:
+    input: data/genome.fa, data/samples/A.fastq
+    output: mapped_reads/A.bam
+    jobid: 2
+    wildcards: sample=A
+    resources: tmpdir=/tmp
+
+[Sun Jun 19 21:13:49 2022]
+Finished job 2.
+1 of 7 steps (14%) done
+Select jobs to execute...
+
+[Sun Jun 19 21:13:49 2022]
+rule samtools_sort:
+    input: mapped_reads/A.bam
+    output: sorted_reads/A.bam
+    jobid: 1
+    wildcards: sample=A
+    resources: tmpdir=/tmp
+
+[Sun Jun 19 21:13:49 2022]
+Finished job 1.
+2 of 7 steps (29%) done
+Select jobs to execute...
+
+[Sun Jun 19 21:13:49 2022]
+rule samtools_index:
+    input: sorted_reads/A.bam
+    output: sorted_reads/A.bam.bai
+    jobid: 5
+    wildcards: sample=A
+    resources: tmpdir=/tmp
+
+[Sun Jun 19 21:13:49 2022]
+Finished job 5.
+3 of 7 steps (43%) done
+Select jobs to execute...
+
+[Sun Jun 19 21:13:49 2022]
+rule bwa_map:
+    input: data/genome.fa, data/samples/B.fastq
+    output: mapped_reads/B.bam
+    jobid: 4
+    wildcards: sample=B
+    resources: tmpdir=/tmp
+
+[Sun Jun 19 21:13:51 2022]
+Finished job 4.
+4 of 7 steps (57%) done
+Select jobs to execute...
+
+[Sun Jun 19 21:13:51 2022]
+rule samtools_sort:
+    input: mapped_reads/B.bam
+    output: sorted_reads/B.bam
+    jobid: 3
+    wildcards: sample=B
+    resources: tmpdir=/tmp
+
+[Sun Jun 19 21:13:51 2022]
+Finished job 3.
+5 of 7 steps (71%) done
+Select jobs to execute...
+
+[Sun Jun 19 21:13:51 2022]
+rule samtools_index:
+    input: sorted_reads/B.bam
+    output: sorted_reads/B.bam.bai
+    jobid: 6
+    wildcards: sample=B
+    resources: tmpdir=/tmp
+
+[Sun Jun 19 21:13:51 2022]
+Finished job 6.
+6 of 7 steps (86%) done
+Select jobs to execute...
+
+[Sun Jun 19 21:13:51 2022]
+rule bcftools_call:
+    input: data/genome.fa, sorted_reads/A.bam, sorted_reads/B.bam, sorted_reads/A.bam.bai, sorted_reads/B.bam.bai
+    output: calls/all.vcf
+    jobid: 0
+    resources: tmpdir=/tmp
+
+[Sun Jun 19 21:13:52 2022]
+Finished job 0.
+7 of 7 steps (100%) done
+Complete log: /home/ubuntu/snakemake-tutorial/.snakemake/log/2022-06-19T211347.970295.snakemake.log

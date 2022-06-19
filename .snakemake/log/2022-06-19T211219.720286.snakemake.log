@@ -1,0 +1,3 @@
+NameError in line 29 of /home/ubuntu/snakemake-tutorial/Snakefile:
+name 'SAMPLES' is not defined
+  File "/home/ubuntu/snakemake-tutorial/Snakefile", line 29, in <module>
