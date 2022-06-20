@@ -1,4 +1,4 @@
-SAMPLES = {"A", "B"}
+configfile: "config.yaml"
 
 rule all:
     input:
@@ -12,7 +12,7 @@ rule bwa_map:
         "mapped_reads/{sample}.bam"
     threads: 8
     shell:
-        "bwa mem {input} | samtools view -Sb - > {output}"
+        "bwa mem -t {thread} {input} | samtools view -Sb - > {output}"
 
 rule samtools_sort:
     input:
@@ -34,8 +34,8 @@ rule samtools_index:
 rule bcftools_call:
     input:
         fa = "data/genome.fa",
-        bam = expand("sorted_reads/{sample}.bam", sample = SAMPLES),
-        bai = expand("sorted_reads/{sample}.bam.bai", sample = SAMPLES)
+        bam = expand("sorted_reads/{sample}.bam", sample = config["samples"]),
+        bai = expand("sorted_reads/{sample}.bam.bai", sample = config["samples"])
     output:
         "calls/all.vcf"
     shell:
