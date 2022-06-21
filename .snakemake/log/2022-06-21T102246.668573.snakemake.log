@@ -1,0 +1,54 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+bwa_map               1              8              8
+samtools_index        1              1              1
+samtools_sort         1              1              1
+total                 3              1              8
+
+Select jobs to execute...
+
+[Tue Jun 21 10:22:46 2022]
+rule bwa_map:
+    input: data/genome.fa, data/samples/C.fastq
+    output: mapped_reads/C.bam
+    log: logs/bwa_mem/C.log
+    jobid: 2
+    wildcards: sample=C
+    threads: 8
+    resources: tmpdir=/tmp
+
+[Tue Jun 21 10:22:47 2022]
+Finished job 2.
+1 of 3 steps (33%) done
+Select jobs to execute...
+
+[Tue Jun 21 10:22:47 2022]
+rule samtools_sort:
+    input: mapped_reads/C.bam
+    output: sorted_reads/C.bam
+    jobid: 1
+    wildcards: sample=C
+    resources: tmpdir=/tmp
+
+[Tue Jun 21 10:22:47 2022]
+Finished job 1.
+2 of 3 steps (67%) done
+Select jobs to execute...
+
+[Tue Jun 21 10:22:47 2022]
+rule samtools_index:
+    input: sorted_reads/C.bam
+    output: sorted_reads/C.bam.bai
+    jobid: 0
+    wildcards: sample=C
+    resources: tmpdir=/tmp
+
+[Tue Jun 21 10:22:47 2022]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: /home/ubuntu/snakemake-tutorial/.snakemake/log/2022-06-21T102246.668573.snakemake.log
