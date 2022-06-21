@@ -1,0 +1,23 @@
+Building DAG of jobs...
+Job stats:
+job               count    min threads    max threads
+--------------  -------  -------------  -------------
+all                   1              1              1
+bcftools_call         1              1              1
+bwa_map               1              1              1
+plot_quals            1              1              1
+samtools_index        1              1              1
+samtools_sort         1              1              1
+total                 6              1              1
+
+
+[Mon Jun 20 15:46:12 2022]
+rule bwa_map:
+    input: data/genome.fa, data/samples/C.fastq
+    output: mapped_reads/C.bam
+    jobid: 6
+    wildcards: sample=C
+    resources: tmpdir=/tmp
+
+RuleException in line 10 of /home/ubuntu/snakemake-tutorial/Snakefile:
+NameError: The name 'thread' is unknown in this context. Please make sure that you defined that variable. Also note that braces not used for variable access have to be escaped by repeating them, i.e. {{print $1}}
